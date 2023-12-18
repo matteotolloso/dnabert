@@ -15,10 +15,10 @@ from multiprocessing import Process
 
 
 
-FASTA_FILE_PATH = "../BioEmbedding/dataset/topo/topo.fasta"
-OUT_DIR = "../BioEmbedding/dataset/topo/embeddings/dnabert"
-MAX_CHUNK_SIZE = 512
-FAST_MODE = False
+FASTA_FILE_PATH = "../BioEmbedding/dataset/globins/globins.fasta"
+OUT_DIR = "../BioEmbedding/dataset/globins/embeddings/dnabert"
+MAX_CHUNK_SIZE = 510
+FAST_MODE = True
 
 
 DNABERT_PATH = Path("dnabert")
@@ -121,9 +121,6 @@ def main():
         seq_string = str(seqrecord.seq)
         seq_string = seq_string.replace(" ", "").replace("\n", "")
 
-        if set(seq_string).issubset(set(["A", "C", "G", "T"])):
-            seq_string = str(Seq(seq_string).translate(stop_symbol=""))
-            print("The nucleotides sequence for ", seq_id, " has been translated", file=sys.stderr, flush=True)
         
         # split the sequence in chunks such that each chunk has approximately the same length
         N = int(np.ceil(len(seq_string) / MAX_CHUNK_SIZE)) # number of chunks
@@ -140,7 +137,7 @@ def main():
                 sequence_embedding.append(z)
 
             # can happen that che subsequences are not of the same length, in this case pad them with the mean value
-            max_len = max([len(z) for z in sequence_embedding]) # z is a np array size (chunk_size x 1280)
+            max_len = max([len(z) for z in sequence_embedding]) # z is a np array size (chunk_size x 786)
             for i, z in enumerate(sequence_embedding):
                 if len(z) < max_len:
                     sequence_embedding[i] = np.append(z, [np.mean(z, axis=0)], axis=0) # it is enough to append only one value, since the max difference between chunks is 1
