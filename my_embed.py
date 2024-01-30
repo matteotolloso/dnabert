@@ -15,10 +15,10 @@ from multiprocessing import Process
 
 
 
-FASTA_FILE_PATH = "../BioEmbedding/dataset/globins/globins.fasta"
-OUT_DIR = "../BioEmbedding/dataset/globins/embeddings/dnabert"
+FASTA_FILE_PATH = "../BioEmbedding/dataset/meningite/meningite.fasta"
+OUT_DIR = "../BioEmbedding/dataset/meningite/embeddings/dnabert"
 MAX_CHUNK_SIZE = 510
-FAST_MODE = True
+FAST_MODE = False
 
 
 DNABERT_PATH = Path("dnabert")
